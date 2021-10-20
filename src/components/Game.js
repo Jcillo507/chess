@@ -2,11 +2,12 @@ import * as Chess from 'chess.js'
 import { BehaviorSubject } from 'rxjs'
 
 
-let promotion = 'rnb2bnr/pppPkppp/8/4p3/7q/8/PPPP1PPP/RNBQKBNR w KQ - 1 5'
+// let promotion = 'rnb2bnr/pppPkppp/8/4p3/7q/8/PPPP1PPP/RNBQKBNR w KQ - 1 5'
 
-const chess = new Chess(promotion)
+// const chess = new Chess(promotion)
+let checkmate = 'rnb1kbnr/pppp1ppp/8/4p3/5PPq/PPPPP2P/RNBQKBNR w KQkq - 1 3'
 
-// const chess = new Chess()
+const chess = new Chess()
 
 export const gameSubject = new BehaviorSubject()
 
@@ -19,15 +20,12 @@ export const move = (from, to, promotion) => {
 
   const legalMove = chess.move(tempMove)
   if (legalMove) {
-    gameSubject.next({
-      board: chess.board()
-    })
+   updateGame()
   }
 }
 
 export const handleMove = (from, to) => {
   const promotions = chess.moves({ verbose: true }).filter(m => m.promotion)
-  console.table(promotions)
   if (promotions.some(p => `${p.from}:${p.to}` === `${from}:${to}`)) {
     const pendingPromotion = { from, to, color: promotions[0].color }
     updateGame(pendingPromotion)
@@ -41,13 +39,40 @@ export const handleMove = (from, to) => {
 }
 
 const updateGame = (pendingPromotion) => {
+  const isGameOver = chess.game_over()
   const newGame = {
     board: chess.board(),
-    pendingPromotion
+    pendingPromotion,
+    isGameOver,
+    result: isGameOver ? getGameResult() : null
   }
   gameSubject.next(newGame)
 }
 
 export const initGame = () => {
   updateGame()
+}
+
+const getGameResult = () => {
+  if (chess.in_checkmate()) {
+    const winner = chess.turn() === "w" ? 'BLACK' : 'WHITE'
+    return `CHECKMATE - WINNER - ${winner}`
+  } else if (chess.in_draw()) {
+    let reason = '50 - MOVES - RULE'
+    if (chess.in_stalemate()) {
+      reason = 'STALEMATE'
+    } else if (chess.in_threefold_repetition()) {
+      reason = 'REPETITION'
+    } else if (chess.insufficient_material()) {
+      reason = "INSUFFICIENT MATERIAL"
+    }
+    return `DRAW - ${reason}`
+  } else {
+    return 'UNKNOWN REASON'
+  }
+}
+
+export const resetGame =()=>{
+chess.reset()
+updateGame()
 }
