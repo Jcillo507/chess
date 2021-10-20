@@ -54,3 +54,10 @@ cursor: grab;
   max-height:70%;
   max-width: 70%;
 }
+.promote-square{
+  width:50%;
+  height:50%;
+}
+.cursor-pointer{
+cursor:pointer
+}

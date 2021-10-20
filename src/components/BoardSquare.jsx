@@ -1,21 +1,35 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import Square from "./Square";
 import Piece from "./Piece";
-import { move } from "./Game";
+import Promote from "./Promote";
+import { handleMove, gameSubject } from "./Game";
 
 const BoardSquare = ({ piece, black, position }) => {
+  const [promotion, setPromotion] = useState(null);
   const [, drop] = useDrop({
     accept: "piece",
     drop: (item) => {
       const [from] = item.id.split("_");
-      move(from, position);
+      handleMove(from, position);
     },
   });
+  useEffect(() => {
+    const subscribe = gameSubject.subscribe(({ pendingPromotion }) => {
+      pendingPromotion && pendingPromotion.to === position
+        ? setPromotion(pendingPromotion)
+        : setPromotion(null);
+    });
+    return () => subscribe.unsubscribe();
+  }, []);
   return (
     <div className="board-square" ref={drop}>
       <Square black={black}>
-        {piece && <Piece piece={piece} position={position} />}
+        {promotion ? (
+          <Promote promotion={promotion}/>
+        ) : piece ? (
+          <Piece piece={piece} position={position} />
+        ) : null}
       </Square>
     </div>
   );
