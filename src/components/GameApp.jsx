@@ -8,19 +8,38 @@ const GameApp = () => {
   const [board, setBoard] = useState([]);
   const [isGameOver, setIsGameOver] = useState();
   const [result, setResult] = useState();
-  const [turn, setTurn] = useState();
+  const [position, setPosition] = useState();
+  const [initResult, setInitResult] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   useEffect(() => {
-    initGame(id !== "local" ? db.doc(`games/${id}`) : null);
-    const subscribe = gameSubject.subscribe((game) => {
-      setBoard(game.board);
-      setIsGameOver(game.isGameOver);
-      setResult(game.result);
-      setTurn(game.turn);
-    });
-    return () => subscribe.unsubscribe();
-  }, []);
+    let subscribe;
+    const init = async () => {
+      const res = await initGame(id !== "local" ? db.doc(`games/${id}`) : null);
+      setInitResult(res);
+      setLoading(false);
+      if(!res){
+        subscribe = gameSubject.subscribe((game) => {
+        setBoard(game.board);
+        setIsGameOver(game.isGameOver);
+        setResult(game.result);
+        setPosition(game.position);
+      });
+      }
+    };
+    init();
+    return () => subscribe && subscribe.unsubscribe();
+  }, [id]);
 
+  if (loading) {
+    return "Loading";
+  }
+  if (initResult === "not found") {
+    return " Game Not Found";
+  }
+  if (initResult === "intruder") {
+    return " The Game is full";
+  }
   return (
     <div className="app-ctr">
       {isGameOver && (
@@ -32,7 +51,7 @@ const GameApp = () => {
         </>
       )}
       <div className="board-ctr">
-        <Board board={board} turn={turn} />
+        <Board board={board} position={position} />
       </div>
       {result && <p className="vertical-text">{result}</p>}
     </div>

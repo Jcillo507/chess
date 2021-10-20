@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
 import BoardSquare from "./BoardSquare";
 
-const Board = ({ board, turn }) => {
+const Board = ({ board, position }) => {
   const [currBoard, setCurrBoard] = useState([])
   useEffect(() => {
    setCurrBoard(
-     turn === "w" ? board.flat(): board.flat().reverse()
+     position === "w" ? board.flat(): board.flat().reverse()
    )
-  }, [board, turn])
+  }, [board, position])
   const getXY = (i) => {
-    const x = turn === 'w' ? i % 8 : Math.abs((i % 8) - 7)
-    const y = turn === "w" ? Math.abs(Math.floor((i / 8) - 7)) : Math.floor(i/8);
+    const x = position === 'w' ? i % 8 : Math.abs((i % 8) - 7)
+    const y = position === "w" ? Math.abs(Math.floor((i / 8) - 7)) : Math.floor(i/8);
     return { x, y };
   };
   const isBlack = (i) => {
