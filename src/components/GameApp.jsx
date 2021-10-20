@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { gameSubject, initGame, resetGame } from "./Game";
 import Board from "./Board";
@@ -13,6 +13,7 @@ const GameApp = () => {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("waiting");
   const { id } = useParams();
+  const history = useHistory()
   const shareableLink = window.location.href;
   useEffect(() => {
     let subscribe;
@@ -50,7 +51,10 @@ const GameApp = () => {
       {isGameOver && (
         <>
           <h2 className="vertical-text">Game Over</h2>
-          <button onClick={resetGame}>
+          <button onClick={async ()=> {
+            await resetGame()
+            history.push('/')
+            }}>
             <span className="vertical-text">New Game</span>
           </button>
         </>

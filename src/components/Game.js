@@ -101,10 +101,13 @@ export const handleMove = (from, to) => {
   move(from, to)
 }
 
-const updateGame = async (pendingPromotion) => {
+const updateGame = async (pendingPromotion, reset) => {
   const isGameOver = chess.game_over()
   if (gameRef) {
     const updatedData = {gameData: chess.fen(), pendingPromotion: pendingPromotion || null}
+    if(reset){
+      updatedData.status = 'over'
+    }
     await gameRef.update(updatedData)
   } else {
     const newGame = {
@@ -138,8 +141,14 @@ const getGameResult = () => {
   }
 }
 
-export const resetGame = () => {
+export const resetGame = async() => {
+if(gameRef){
+  await updateGame(null, true)
   chess.reset()
+}else{
+   chess.reset()
   updateGame()
+}
+ 
 }
 
