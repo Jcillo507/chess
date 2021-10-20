@@ -8,12 +8,14 @@ const App = () => {
   const [board, setBoard] = useState([])
   const [isGameOver, setIsGameOver] = useState()
   const [result, setResult] = useState()
+  const [turn, setTurn] = useState()
   useEffect(() => {
     initGame()
     const subscribe = gameSubject.subscribe((game) =>{
      setBoard(game.board)
      setIsGameOver(game.isGameOver)
      setResult(game.result)
+     setTurn(game.turn)
     })
     return () => subscribe.unsubscribe()
   }, [])
@@ -21,13 +23,13 @@ const App = () => {
   return (
     <div className="ctr">
       {isGameOver && (
-        <> 
+        <>
         <h2 className="vertical-text">Game Over</h2>
         <button onClick={resetGame}><span className='vertical-text'>New Game</span></button>
         </>
       )}
       <div className="board-ctr">
-        <Board board={board} />
+        <Board board={board} turn={turn}/>
       </div>
       {result && <p className='vertical-text'>{result}</p>}
     </div>

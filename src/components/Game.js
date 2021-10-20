@@ -1,12 +1,6 @@
 import * as Chess from 'chess.js'
 import { BehaviorSubject } from 'rxjs'
 
-
-// let promotion = 'rnb2bnr/pppPkppp/8/4p3/7q/8/PPPP1PPP/RNBQKBNR w KQ - 1 5'
-
-// const chess = new Chess(promotion)
-let checkmate = 'rnb1kbnr/pppp1ppp/8/4p3/5PPq/PPPPP2P/RNBQKBNR w KQkq - 1 3'
-
 const chess = new Chess()
 
 export const gameSubject = new BehaviorSubject()
@@ -20,7 +14,7 @@ export const move = (from, to, promotion) => {
 
   const legalMove = chess.move(tempMove)
   if (legalMove) {
-   updateGame()
+    updateGame()
   }
 }
 
@@ -44,12 +38,18 @@ const updateGame = (pendingPromotion) => {
     board: chess.board(),
     pendingPromotion,
     isGameOver,
+    turn: chess.turn(),
     result: isGameOver ? getGameResult() : null
   }
+  localStorage.setItem('savedGame', chess.fen())
   gameSubject.next(newGame)
 }
 
 export const initGame = () => {
+  const savedGame = localStorage.getItem('savedGame')
+  if(savedGame){
+    chess.load(savedGame)
+  }
   updateGame()
 }
 
@@ -72,7 +72,8 @@ const getGameResult = () => {
   }
 }
 
-export const resetGame =()=>{
-chess.reset()
-updateGame()
+export const resetGame = () => {
+  chess.reset()
+  updateGame()
 }
+
