@@ -4,7 +4,7 @@
 
 }
 
-.ctr {
+.app-ctr {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -80,4 +80,10 @@
   background: rgb(63, 63, 63);
   border: 2px solid white;
   border-radius: 10px;
+}
+
+.user-form {
+  margin-top: 30px !important;
+  max-width: 800px;
+  margin: auto;
 }

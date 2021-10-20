@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import './App.css';
-import { gameSubject, initGame, resetGame } from './components/Game'
-import Board from './components/Board'
+import { gameSubject, initGame, resetGame } from './Game'
+import Board from './Board'
 
-const App = () => {
+const GameApp = () => {
   const [board, setBoard] = useState([])
   const [isGameOver, setIsGameOver] = useState()
   const [result, setResult] = useState()
@@ -21,7 +20,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className="ctr">
+    <div className="app-ctr">
       {isGameOver && (
         <>
         <h2 className="vertical-text">Game Over</h2>
@@ -36,4 +35,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default GameApp;

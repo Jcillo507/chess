@@ -47,7 +47,7 @@ const updateGame = (pendingPromotion) => {
 
 export const initGame = () => {
   const savedGame = localStorage.getItem('savedGame')
-  if(savedGame){
+  if (savedGame) {
     chess.load(savedGame)
   }
   updateGame()
