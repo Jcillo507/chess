@@ -11,26 +11,31 @@ const GameApp = () => {
   const [position, setPosition] = useState();
   const [initResult, setInitResult] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("waiting");
   const { id } = useParams();
+  const shareableLink = window.location.href;
   useEffect(() => {
     let subscribe;
     const init = async () => {
       const res = await initGame(id !== "local" ? db.doc(`games/${id}`) : null);
       setInitResult(res);
       setLoading(false);
-      if(!res){
+      if (!res) {
         subscribe = gameSubject.subscribe((game) => {
-        setBoard(game.board);
-        setIsGameOver(game.isGameOver);
-        setResult(game.result);
-        setPosition(game.position);
-      });
+          setBoard(game.board);
+          setIsGameOver(game.isGameOver);
+          setResult(game.result);
+          setPosition(game.position);
+          setStatus(game.status);
+        });
       }
     };
     init();
     return () => subscribe && subscribe.unsubscribe();
   }, [id]);
-
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(shareableLink);
+  };
   if (loading) {
     return "Loading";
   }
@@ -54,6 +59,27 @@ const GameApp = () => {
         <Board board={board} position={position} />
       </div>
       {result && <p className="vertical-text">{result}</p>}
+      {status === "waiting" && (
+        <div className="notification is-link share-game">
+          <strong>Share Game to play with friend</strong>
+          <br />
+          <div className="field has-addons">
+            <div className="control is-expanded">
+              <input
+                type="text"
+                className="input"
+                readOnly
+                value={shareableLink}
+              />
+            </div>
+            <div className="control">
+              <button className="button is-info" onClick={copyToClipboard}>
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

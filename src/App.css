@@ -100,3 +100,10 @@
 .pointer{
   cursor: pointer;
 }
+
+.share-game{
+  position: absolute;
+  width:400px;
+  bottom: 0;
+  left: 0;
+}
