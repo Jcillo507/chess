@@ -12,6 +12,7 @@ const GameApp = () => {
   const [initResult, setInitResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("waiting");
+  const [game, setGame] = useState({})
   const { id } = useParams();
   const history = useHistory()
   const shareableLink = window.location.href;
@@ -28,6 +29,7 @@ const GameApp = () => {
           setResult(game.result);
           setPosition(game.position);
           setStatus(game.status);
+          setGame(game)
         });
       }
     };
@@ -51,16 +53,24 @@ const GameApp = () => {
       {isGameOver && (
         <>
           <h2 className="vertical-text">Game Over</h2>
-          <button onClick={async ()=> {
-            await resetGame()
-            history.push('/')
-            }}>
+          <button
+            onClick={async () => {
+              await resetGame();
+              history.push("/");
+            }}
+          >
             <span className="vertical-text">New Game</span>
           </button>
         </>
       )}
       <div className="board-ctr">
+       {game.opponent && game.opponent.name && (
+          <span className="tag is-link">{game.opponent.name}</span>
+        )}
         <Board board={board} position={position} />
+        {game.member && game.member.name && (
+          <span className="tag is-link">{game.member.name}</span>
+        )} 
       </div>
       {result && <p className="vertical-text">{result}</p>}
       {status === "waiting" && (

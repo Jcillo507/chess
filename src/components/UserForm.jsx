@@ -5,7 +5,7 @@ const UserForm = () => {
   const [name, setName] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("username", name);
+    localStorage.setItem("userName", name);
     await auth.signInAnonymously();
   };
   return (

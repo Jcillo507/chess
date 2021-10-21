@@ -20,7 +20,7 @@ const Home = () => {
     const member = {
       uid: currentUser.uid,
       piece:
-        startingPiece === "Random"
+        startingPiece === "r"
           ? ["b", "w"][Math.round(Math.random())]
           : startingPiece,
       name: localStorage.getItem("userName"),
