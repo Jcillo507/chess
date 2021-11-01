@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { auth, db } from "../firebase";
-import bg from "./assets/bg.png";
 
 const Home = () => {
   const { currentUser } = auth;
@@ -40,9 +39,10 @@ const Home = () => {
   };
   return (
     <>
-      <h2>Chess</h2>
-        <div className="columns start">
-          <div className="column has-background-primary home-col">
+      <h4>Play Chess with your friends</h4>
+      <div className="bttns-ctr">
+        <div className="columns buttons">
+          <div className="column home-col">
             <button
               className="button is-link"
               onClick={() => {
@@ -52,7 +52,7 @@ const Home = () => {
               Play Locally
             </button>
           </div>
-          <div className="column has-background-link home-col">
+          <div className="column home-col">
             <button className="button is-primary" onClick={handlePlayOnline}>
               Play Online
             </button>
@@ -81,6 +81,7 @@ const Home = () => {
             ></button>
           </div>
         </div>
+      </div>
     </>
   );
 };

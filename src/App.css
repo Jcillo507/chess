@@ -9,12 +9,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-.overlay{
-/* background-color: #000000; */
-min-height: 100vh;
-/* opacity: 20%; */
 
-}
 .game-ctr {
   min-height: 100vh;
   display: flex;
@@ -58,7 +53,6 @@ min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .piece {
@@ -97,10 +91,13 @@ min-height: 100vh;
   margin: auto;
 }
 
-.start {
-  min-height: 10vh;
+.bttns-ctr{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height:80vh;
 }
-
 .home-col {
   display: flex;
   justify-content: center;
@@ -116,4 +113,10 @@ min-height: 100vh;
   width: 400px;
   bottom: 0;
   left: 0;
+}
+h4{
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 24px;
 }
