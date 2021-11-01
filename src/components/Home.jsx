@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import { auth, db } from "../firebase";
 
 const Home = () => {
   const { currentUser } = auth;
   const [showModal, setShowModal] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
 
   const newGameOptions = [
     { label: "Black Pieces", value: "b" },
@@ -26,21 +26,29 @@ const Home = () => {
       name: localStorage.getItem("userName"),
       creator: true,
     };
-    const game ={
-      status: 'waiting',
+    const game = {
+      status: "waiting",
       members: [member],
-      gameId: `${Math.random().toString(36).substr(2, 9)}_${Date.now()}`
-    }
-     await db.collection('games').doc(game.gameId).set(game)
-     history.push(`/game/${game.gameId}`)
-
-
+      gameId: `${Math.random().toString(36).substr(2, 9)}_${Date.now()}`,
+    };
+    await db.collection("games").doc(game.gameId).set(game);
+    history.push(`/game/${game.gameId}`);
+  };
+  const startLocalGame = () => {
+    history.push(`/game/local`);
   };
   return (
     <>
       <div className="columns home">
         <div className="column has-background-primary home-col">
-          <button className="button is-link">Play Locally</button>
+          <button
+            className="button is-link"
+            onClick={() => {
+              startLocalGame();
+            }}
+          >
+            Play Locally
+          </button>
         </div>
         <div className="column has-background-link home-col">
           <button className="button is-primary" onClick={handlePlayOnline}>
@@ -54,7 +62,11 @@ const Home = () => {
               <div className="card-content">Select your color</div>
               <footer className="card-footer">
                 {newGameOptions.map(({ label, value }) => (
-                  <span className="card-footer-item pointer" key={value} onClick={()=>startOnlineGame(value)}>
+                  <span
+                    className="card-footer-item pointer"
+                    key={value}
+                    onClick={() => startOnlineGame(value)}
+                  >
                     {label}
                   </span>
                 ))}

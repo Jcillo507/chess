@@ -19,17 +19,18 @@ const App = () => {
     return <UserForm />
   }
   return (
-  <Router>
-    <Switch>
-      <Route exact path='/'>
-        <Home />
-      </Route>
-      <Route path='/game/:id'>
-        <GameApp/>
-      </Route>
-    </Switch>
-  </Router>
-  )
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/game/:id">
+          <GameApp />
+        </Route>
+       
+      </Switch>
+    </Router>
+  );
 }
 
 export default App

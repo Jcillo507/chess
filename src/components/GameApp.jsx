@@ -16,10 +16,12 @@ const GameApp = () => {
   const { id } = useParams();
   const history = useHistory()
   const shareableLink = window.location.href;
+  console.log(useParams())
   useEffect(() => {
     let subscribe;
     const init = async () => {
       const res = await initGame(id !== "local" ? db.doc(`games/${id}`) : null);
+      console.log(res, id)
       setInitResult(res);
       setLoading(false);
       if (!res) {
