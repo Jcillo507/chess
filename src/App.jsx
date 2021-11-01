@@ -27,7 +27,6 @@ const App = () => {
         <Route path="/game/:id">
           <GameApp />
         </Route>
-       
       </Switch>
     </Router>
   );
