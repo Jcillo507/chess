@@ -41,8 +41,6 @@ const Home = () => {
     <>
       <h4>Play Chess with your friends</h4>
       <div className="bttns-ctr">
-        <div className="columns buttons">
-          <div className="column home-col">
             <button
               className="button is-link"
               onClick={() => {
@@ -51,12 +49,9 @@ const Home = () => {
             >
               Play Locally
             </button>
-          </div>
-          <div className="column home-col">
             <button className="button is-primary" onClick={handlePlayOnline}>
               Play Online
             </button>
-          </div>
           <div className={`modal ${showModal ? "is-active" : ""}`}>
             <div className="modal-background"></div>
             <div className="modal-content">
@@ -81,7 +76,7 @@ const Home = () => {
             ></button>
           </div>
         </div>
-      </div>
+
     </>
   );
 };
