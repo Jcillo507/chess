@@ -39,46 +39,43 @@ const Home = () => {
   };
   return (
     <>
-      <div className="columns home">
-        <div className="column has-background-primary home-col">
-          <button
-            className="button is-link"
-            onClick={() => {
-              startLocalGame();
-            }}
-          >
-            Play Locally
-          </button>
-        </div>
-        <div className="column has-background-link home-col">
-          <button className="button is-primary" onClick={handlePlayOnline}>
-            Play Online
-          </button>
-        </div>
-        <div className={`modal ${showModal ? "is-active" : ""}`}>
-          <div className="modal-background"></div>
-          <div className="modal-content">
-            <div className="card">
-              <div className="card-content">Select your color</div>
-              <footer className="card-footer">
-                {newGameOptions.map(({ label, value }) => (
-                  <span
-                    className="card-footer-item pointer"
-                    key={value}
-                    onClick={() => startOnlineGame(value)}
-                  >
-                    {label}
-                  </span>
-                ))}
-              </footer>
+      <h4>Play Chess with your friends</h4>
+      <div className="bttns-ctr">
+            <button
+              className="button is-link"
+              onClick={() => {
+                startLocalGame();
+              }}
+            >
+              Play Locally
+            </button>
+            <button className="button is-primary" onClick={handlePlayOnline}>
+              Play Online
+            </button>
+          <div className={`modal ${showModal ? "is-active" : ""}`}>
+            <div className="modal-background"></div>
+            <div className="modal-content">
+              <div className="card">
+                <div className="card-content">Select your color</div>
+                <footer className="card-footer">
+                  {newGameOptions.map(({ label, value }) => (
+                    <span
+                      className="card-footer-item pointer"
+                      key={value}
+                      onClick={() => startOnlineGame(value)}
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </footer>
+              </div>
             </div>
+            <button
+              className="modal-close is-large"
+              onClick={() => setShowModal(false)}
+            ></button>
           </div>
-          <button
-            className="modal-close is-large"
-            onClick={() => setShowModal(false)}
-          ></button>
         </div>
-      </div>
     </>
   );
 };

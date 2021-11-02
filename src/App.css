@@ -1,17 +1,21 @@
 * {
   margin: 0;
   padding: 0;
-
 }
 
-.app-ctr {
+.bg {
+  min-height: 100vh;
+  background-image: url('/src/components/assets/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.game-ctr {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(34, 34, 34);
 }
-
 .board-ctr {
   width: 600px;
   height: 600px;
@@ -49,7 +53,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .piece {
@@ -86,24 +89,36 @@
   margin-top: 30px !important;
   max-width: 800px;
   margin: auto;
-} 
-.home{
-  min-height: 100vh;
 }
 
-.home-col{
+.bttns-ctr{
   display:flex;
-  justify-content:center;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  min-height:70vh;
+  gap:50px;
+}
+
+.home-col {
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.share-game{
+.share-game {
   position: absolute;
-  width:400px;
+  width: 400px;
   bottom: 0;
   left: 0;
+}
+h4{
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 44px;
 }

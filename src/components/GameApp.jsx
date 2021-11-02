@@ -51,7 +51,7 @@ const GameApp = () => {
     return " The Game is full";
   }
   return (
-    <div className="app-ctr">
+    <div className="game-ctr">
       {isGameOver && (
         <>
           <h2 className="vertical-text">Game Over</h2>
