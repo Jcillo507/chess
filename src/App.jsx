@@ -19,7 +19,7 @@ const App = () => {
     return <UserForm />;
   }
   return (
-    <div className="bg">
+    <div className="">
       <Router>
         <Switch>
           <Route exact path="/">
